@@ -21,4 +21,4 @@ requires:
 resources:
   homepage: http://metacpan.org/release/Net-HTTP-Methods-Patch-LogRequest
   repository: http://github.com/sharyanto/perl-Net-HTTP-Methods-Patch-LogRequest
-version: 0.07
+version: 0.08

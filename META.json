@@ -24,6 +24,11 @@
             "Module::Build" : "0.3601"
          }
       },
+      "develop" : {
+         "requires" : {
+            "Test::Rinci" : "0.01"
+         }
+      },
       "runtime" : {
          "requires" : {
             "Log::Any" : 0,
@@ -40,6 +45,6 @@
          "url" : "http://github.com/sharyanto/perl-Net-HTTP-Methods-Patch-LogRequest"
       }
    },
-   "version" : "0.07"
+   "version" : "0.08"
 }
 

@@ -7,7 +7,7 @@ no warnings;
 use Module::Patch 0.12 qw();
 use base qw(Module::Patch);
 
-our $VERSION = '0.07'; # VERSION
+our $VERSION = '0.08'; # VERSION
 
 our %config;
 
@@ -21,8 +21,17 @@ my $p_log_request = sub {
     my $proto = ref($_[0]) =~ /^LWP::Protocol::(\w+)::/ ? $1 : "?";
 
     my $log = Log::Any->get_logger;
-    $log->tracef("HTTP request (proto=%s, len=%d):\n%s",
-                 $proto, length($res), $res);
+    if ($log->is_trace) {
+
+        # there is no equivalent of caller_depth in Log::Any, so we do this only
+        # for Log4perl
+        local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1
+            if $Log::{"Log4perl::"};
+
+        $log->tracef("HTTP request (proto=%s, len=%d):\n%s",
+                     $proto, length($res), $res);
+
+    }
     $res;
 };
 
@@ -53,7 +62,7 @@ Net::HTTP::Methods::Patch::LogRequest - Log raw HTTP requests
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -90,6 +99,8 @@ see that it is already doing that (albeit commented):
 
   my $req_buf = $socket->format_request($method, $fullpath, @h);
   #print "------\n$req_buf\n------\n";
+
+=for Pod::Coverage ^(patch_data)$
 
 =head1 FAQ
 
